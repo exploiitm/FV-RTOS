@@ -1,0 +1,99 @@
+[package]
+authors = ["The rp-rs Developers"]
+categories = ["embedded", "hardware-support", "no-std", "no-std::no-alloc"]
+description = "A Rust Embedded-HAL impl for the rp2040 microcontroller"
+edition = "2021"
+homepage = "https://github.com/rp-rs/rp-hal"
+keywords = ["embedded", "hal", "raspberry-pi", "rp2040", "embedded-hal"]
+license = "MIT OR Apache-2.0"
+name = "rp2040-hal"
+repository = "https://github.com/rp-rs/rp-hal"
+rust-version = "1.81"
+version = "0.11.0"
+
+[package.metadata.docs.rs]
+features = ["rt", "rom-v2-intrinsics", "defmt", "rtic-monotonic"]
+targets = ["thumbv6m-none-eabi"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# Non-optional dependencies. Keep these sorted by name.
+bitfield = {version = "0.14.0"}
+cortex-m = "0.7.2"
+critical-section = {version = "1.2.0"}
+embedded-dma = "0.2.0"
+embedded-hal = "1.0.0"
+embedded-hal-async = "1.0.0"
+embedded-hal-nb = "1.0.0"
+embedded-io = "0.6.1"
+embedded_hal_0_2 = {package = "embedded-hal", version = "0.2.5", features = ["unproven"]}
+frunk = {version = "0.4.1", default-features = false}
+fugit = "0.3.6"
+itertools = {version = "0.10.1", default-features = false}
+nb = "1.0"
+paste = "1.0"
+pio = "0.3.0"
+rand_core = "0.9.3"
+rp-binary-info = { version = "0.1.2", path = "../rp-binary-info" }
+rp-hal-common = {version="0.1.0", path="../rp-hal-common"}
+rp2040-hal-macros = {version = "0.1.0", path = "../rp2040-hal-macros"}
+rp2040-pac = {version = "0.6.0", features = ["critical-section"]}
+usb-device = "0.3"
+vcell = "0.1"
+void = {version = "1.0.2", default-features = false}
+
+# Optional dependencies. Keep these sorted by name.
+chrono = {version = "0.4", default-features = false, optional = true}
+defmt = {version = ">=0.2.0, <0.4", optional = true}
+i2c-write-iter = {version = "1.0.0", features = ["async"], optional = true}
+rtic-monotonic = {version = "1.0.0", optional = true}
+
+[dev-dependencies]
+# Non-optional dependencies. Keep these sorted by name.
+rand = {version = "0.9.1", default-features = false}
+
+# Optional dependencies. Keep these sorted by name.
+# None
+
+[features]
+# Minimal startup / runtime for Cortex-M microcontrollers
+rt = ["rp2040-pac/rt"]
+
+# Memoize(cache) ROM function pointers on first use to improve performance
+rom-func-cache = []
+
+# Disable automatic mapping of language features (like floating point math) to ROM functions
+disable-intrinsics = []
+
+# This enables ROM functions for f64 math that were not present in the earliest RP2040s
+rom-v2-intrinsics = []
+
+# This enables a fix for USB errata 5: USB device fails to exit RESET state on busy USB bus.
+# Only required for RP2040 B0 and RP2040 B1, but it also works for RP2040 B2 and above
+# **Note that the workaround takes control of pin 15 (bank0) during usb reset so the bank needs
+# to be taken out of reset before calling `UsbBus::new`**.
+# Using `let pins = Pins::new(peripherals.IO_BANK0, peripherals.PADS_BANK0, sio.gpio_bank0, &mut peripherals.RESETS);`
+# is enough to take the Bank 0 out of reset.
+rp2040-e5 = []
+
+# critical section that is safe for multicore use
+critical-section-impl = ["critical-section/restore-state-u8"]
+
+# Add conversion functions between chrono types and the rp2040-hal specific DateTime type
+chrono = ["dep:chrono"]
+
+# Implement `defmt::Format` for several types.
+defmt = ["dep:defmt"]
+
+# Implement `rtic_monotonic::Monotonic` based on the RP2040 timer peripheral
+rtic-monotonic = ["dep:rtic-monotonic"]
+
+# Implement `i2c-write-iter` traits
+i2c-write-iter = ["dep:i2c-write-iter"]
+
+# Add a binary-info header block containing picotool-compatible metadata.
+#
+# Requires 'rt' so that the vector table is correctly sized and therefore the
+# header is within reach of picotool.
+binary-info = ["rt", "rp-binary-info/binary-info"]

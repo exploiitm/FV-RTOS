@@ -1,0 +1,49 @@
+[workspace]
+members = [
+    "rtos",
+    "rp-hal/rp235x-hal",
+]
+resolver = "2"
+
+
+# cargo build/run
+[profile.dev]
+debug = 2
+debug-assertions = true
+opt-level = 2
+overflow-checks = true
+
+# cargo build/run --release
+[profile.release]
+debug = 2
+debug-assertions = false
+lto = 'fat'
+opt-level = 2
+overflow-checks = false
+
+# do not optimize proc-macro crates = faster builds from scratch
+[profile.dev.build-override]
+debug = false
+debug-assertions = false
+overflow-checks = false
+opt-level = 0
+
+[profile.release.build-override]
+debug = false
+debug-assertions = false
+overflow-checks = false
+opt-level = 0
+
+# cargo test
+[profile.test]
+debug = 2
+debug-assertions = true
+opt-level = 2
+overflow-checks = true
+
+# cargo test --release
+[profile.bench]
+debug = 2
+debug-assertions = false
+lto = 'fat'
+opt-level = 3
