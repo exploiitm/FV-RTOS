@@ -9,8 +9,8 @@ typedef enum StatusType {
 
 extern void Task1(void);
 
-enum StatusType ActivateTask(unsigned int tid);
+enum StatusType ActivateTask(void);
 
-void TerminateTask(unsigned int tid);
+void TerminateTask(void);
 
 #endif  /* RTOS_CORE_H */

@@ -1,7 +1,7 @@
 #![no_std]
 
 // Use C-compatible core types
-use core::ffi::c_uint;
+use core::ffi::c_void;
 
 use defmt::*;
 use defmt_rtt as _;
@@ -14,25 +14,27 @@ pub enum StatusType{
 }
 
 pub fn start_os()-> ! {
-    unsafe {
-        Task1();
-    }
+    ActivateTask();
+    info!("Control back to start_os");
+    loop{}
 }
 
 unsafe extern "C" {
-    fn Task1() -> !;
+    fn Task1() -> c_void;
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn ActivateTask(tid: c_uint) -> StatusType {
+pub extern "C" fn ActivateTask() -> StatusType {
     // TODO: lookup & enqueue in your scheduler
-    info!("Task Activated {}", tid);
+    info!("Task Activated " );
+    unsafe{
+        Task1();
+    }
     StatusType::EOk
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn TerminateTask(tid: c_uint) -> ! {
+pub extern "C" fn TerminateTask() {
     // TODO: context switch out
-    info!("Task Terminated {}", tid);
-    loop {}
+    info!("Task Terminated " );
 }
