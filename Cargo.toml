@@ -1,7 +1,7 @@
 [workspace]
 members = [
     "rtos",
-    "rp-hal/rp235x-hal",
+    "rp-hal/rp235x-hal", "rtos_core",
 ]
 resolver = "2"
 

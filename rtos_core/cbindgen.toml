@@ -1,0 +1,7 @@
+language = "C"
+include_guard = "RTOS_CORE_H"
+pragma_once = true
+documentation = true
+style = "both"          # doc + comments
+no_includes = true
+

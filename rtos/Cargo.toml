@@ -17,9 +17,12 @@ panic-probe = { version = "1", features = ["print-defmt"] }
 #rp-pico2 = "0.9" # TODO: Do we have that crate already ?
 
 # If you're not going to use a Board Support Package you'll need these:
+rtos_core = { path = "../rtos_core" }
 rp235x-hal = { path= "../rp-hal/rp235x-hal", features = [
     "rt",
     "critical-section-impl",
     "binary-info",
 ] }
 
+[build-dependencies]
+cc = "1"

@@ -1,0 +1,19 @@
+[package]
+name = "rtos_core"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+name = "rtos_core"
+path = "src/lib.rs"
+
+[dependencies]
+panic-probe = "1.0.0"
+cortex-m = "0.7"
+cortex-m-rt = "0.7"
+embedded-hal = { version = "1.0.0" }
+
+defmt = "1"
+defmt-rtt = "1"
+[build-dependencies]
+cbindgen = "0.29"
