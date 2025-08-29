@@ -23,6 +23,7 @@ rp235x-hal = { path= "../rp-hal/rp235x-hal", features = [
     "critical-section-impl",
     "binary-info",
 ] }
+critical-section = "1.2.0"
 
 [build-dependencies]
 cc = "1"
