@@ -7,16 +7,22 @@ use defmt::*;
 use defmt_rtt as _;
 use panic_probe as _;
 
+mod alarms;
+
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq)]
-pub enum StatusType{
+pub enum StatusType {
     EOk = 0,
+    EOsId = 1,
+    EOsNoFunc = 2,
+    EOsValue = 3,
+    EOsState = 4,
 }
 
-pub fn start_os()-> ! {
+pub fn start_os() -> ! {
     ActivateTask();
     info!("Control back to start_os");
-    loop{}
+    loop {}
 }
 
 unsafe extern "C" {
@@ -26,8 +32,8 @@ unsafe extern "C" {
 #[unsafe(no_mangle)]
 pub extern "C" fn ActivateTask() -> StatusType {
     // TODO: lookup & enqueue in your scheduler
-    info!("Task Activated " );
-    unsafe{
+    info!("Task Activated ");
+    unsafe {
         Task1();
     }
     StatusType::EOk
@@ -36,5 +42,5 @@ pub extern "C" fn ActivateTask() -> StatusType {
 #[unsafe(no_mangle)]
 pub extern "C" fn TerminateTask() {
     // TODO: context switch out
-    info!("Task Terminated " );
+    info!("Task Terminated ");
 }

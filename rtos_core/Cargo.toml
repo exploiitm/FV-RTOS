@@ -15,5 +15,6 @@ embedded-hal = { version = "1.0.0" }
 
 defmt = "1"
 defmt-rtt = "1"
+critical-section = "1.2.0"
 [build-dependencies]
 cbindgen = "0.29"
