@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include "cstdint.h"
+
 typedef enum StatusType {
   EOk = 0,
   EOsId = 1,
@@ -30,6 +32,8 @@ extern void Task1(void);
 enum StatusType ActivateTask(void);
 
 void TerminateTask(void);
+
+void print(const char *input);
 
 enum StatusType GetAlarmBase(AlarmType alarm_id, AlarmBaseRefType info);
 
