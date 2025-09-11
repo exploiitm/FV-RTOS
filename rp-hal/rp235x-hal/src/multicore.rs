@@ -39,15 +39,14 @@
 //!
 //! For a detailed example, see [examples/multicore_fifo_blink.rs](https://github.com/rp-rs/rp-hal/tree/main/rp235x-hal-examples/src/bin/multicore_fifo_blink.rs)
 
-use core::cell::Cell;
-use core::cell::UnsafeCell;
-use core::mem::ManuallyDrop;
-use core::ops::Range;
-use core::sync::atomic::compiler_fence;
-use core::sync::atomic::Ordering;
+use core::{
+    cell::{Cell, UnsafeCell},
+    mem::ManuallyDrop,
+    ops::Range,
+    sync::atomic::{compiler_fence, Ordering},
+};
 
-use crate::pac;
-use crate::Sio;
+use crate::{pac, Sio};
 
 /// Errors for multicore operations.
 #[derive(Debug)]

@@ -1,7 +1,8 @@
-use crate::pac::dma::ch::ch_ctrl_trig::TREQ_SEL_A;
-use crate::pac::{uart0::RegisterBlock, UART0, UART1};
-use crate::resets::SubsystemReset;
-use crate::typelevel::Sealed;
+use crate::{
+    pac::{dma::ch::ch_ctrl_trig::TREQ_SEL_A, uart0::RegisterBlock, UART0, UART1},
+    resets::SubsystemReset,
+    typelevel::Sealed,
+};
 use core::ops::Deref;
 
 #[doc(inline)]

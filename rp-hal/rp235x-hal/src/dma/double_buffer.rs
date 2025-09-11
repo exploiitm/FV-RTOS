@@ -3,8 +3,8 @@
 use core::sync::atomic::{compiler_fence, Ordering};
 
 use super::{
-    single_channel::ChannelConfig, single_channel::SingleChannel, EndlessReadTarget,
-    EndlessWriteTarget, Pace, ReadTarget, WriteTarget,
+    single_channel::{ChannelConfig, SingleChannel},
+    EndlessReadTarget, EndlessWriteTarget, Pace, ReadTarget, WriteTarget,
 };
 
 /// Configuration for double-buffered DMA transfer

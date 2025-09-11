@@ -3,8 +3,10 @@
 //! This module is for receiving data with a UART.
 
 use super::{FifoWatermark, UartDevice, ValidUartPinout};
-use crate::dma::{EndlessReadTarget, ReadTarget};
-use crate::pac::uart0::RegisterBlock;
+use crate::{
+    dma::{EndlessReadTarget, ReadTarget},
+    pac::uart0::RegisterBlock,
+};
 use embedded_hal_0_2::serial::Read as Read02;
 use nb::Error::*;
 

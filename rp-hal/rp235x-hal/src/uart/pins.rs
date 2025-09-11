@@ -1,11 +1,13 @@
 use core::marker::PhantomData;
 
-use crate::gpio::{
-    bank0::*, pin::pin_sealed::TypeLevelPinId, AnyPin, DynFunction, FunctionUart, FunctionUartAux,
-    PullType,
+use crate::{
+    gpio::{
+        bank0::*, pin::pin_sealed::TypeLevelPinId, AnyPin, DynFunction, FunctionUart,
+        FunctionUartAux, PullType,
+    },
+    pac::{UART0, UART1},
+    typelevel::{OptionT, OptionTNone, OptionTSome, Sealed},
 };
-use crate::pac::{UART0, UART1};
-use crate::typelevel::{OptionT, OptionTNone, OptionTSome, Sealed};
 
 use super::UartDevice;
 

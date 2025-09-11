@@ -3,10 +3,11 @@
 //! This module is for transmitting data with a UART.
 
 use super::{FifoWatermark, UartDevice, ValidUartPinout};
-use crate::dma::{EndlessWriteTarget, WriteTarget};
-use crate::pac::uart0::RegisterBlock;
-use core::fmt;
-use core::{convert::Infallible, marker::PhantomData};
+use crate::{
+    dma::{EndlessWriteTarget, WriteTarget},
+    pac::uart0::RegisterBlock,
+};
+use core::{convert::Infallible, fmt, marker::PhantomData};
 use embedded_hal_0_2::serial::Write as Write02;
 use embedded_hal_nb::serial::{ErrorType, Write};
 use nb::Error::*;

@@ -77,8 +77,7 @@
 //! min_config() leaves those registers in the state they were before it was called (Careful, this can lead to unexpected behavior)
 //! It's recommended to only call min_config() after calling default_config() on a pin that shares a PWM block.
 
-use core::convert::Infallible;
-use core::marker::PhantomData;
+use core::{convert::Infallible, marker::PhantomData};
 
 use embedded_dma::Word;
 use embedded_hal::pwm::{ErrorType, SetDutyCycle};

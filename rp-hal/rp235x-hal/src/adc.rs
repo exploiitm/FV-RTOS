@@ -169,8 +169,7 @@
 //! }
 //! ```
 
-use core::convert::Infallible;
-use core::marker::PhantomData;
+use core::{convert::Infallible, marker::PhantomData};
 // Embedded HAL 1.0.0 doesn't have an ADC trait, so use the one from 0.2
 use embedded_hal_0_2::adc::{Channel, OneShot};
 
