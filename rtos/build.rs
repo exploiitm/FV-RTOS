@@ -8,10 +8,12 @@
 //! updating `memory.x` ensures a rebuild of the application with the
 //! new memory settings.
 
-use std::env;
-use std::fs::{self, File};
-use std::io::Write;
-use std::path::PathBuf;
+use std::{
+    env,
+    fs::{self, File},
+    io::Write,
+    path::PathBuf,
+};
 
 fn main() {
     // Put the linker script somewhere the linker can find it
@@ -66,11 +68,11 @@ fn main() {
         .flag_if_supported("-fno-stack-protector")
         .warnings(true);
 
-        build
-            .flag_if_supported("-mcpu=cortex-m33")
-            .flag_if_supported("-mthumb")
-            .flag_if_supported("-mfpu=fpv5-sp-d16")
-            .flag_if_supported("-mfloat-abi=hard");
+    build
+        .flag_if_supported("-mcpu=cortex-m33")
+        .flag_if_supported("-mthumb")
+        .flag_if_supported("-mfpu=fpv5-sp-d16")
+        .flag_if_supported("-mfloat-abi=hard");
 
     build.compile("ctasks");
 

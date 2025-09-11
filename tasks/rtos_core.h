@@ -35,6 +35,8 @@ void TerminateTask(void);
 
 void print(const char *input);
 
+int printf(const char *str, ...);
+
 enum StatusType GetAlarmBase(AlarmType alarm_id, AlarmBaseRefType info);
 
 enum StatusType GetAlarm(AlarmType alarm_id, TickRefType tick);

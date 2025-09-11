@@ -16,5 +16,7 @@ embedded-hal = { version = "1.0.0" }
 defmt = "1"
 defmt-rtt = "1"
 critical-section = "1.2.0"
+printf-compat = { version = "0.2.1", default-features = false }
+embedded-alloc = "0.6.0"
 [build-dependencies]
 cbindgen = "0.29"
