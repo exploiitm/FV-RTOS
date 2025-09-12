@@ -8,6 +8,7 @@ use rp235x_hal::{
     pac::interrupt,
     timer::{Alarm, Alarm0, CopyableTimer0},
 };
+use rtos_core::alarms::*;
 
 const XTAL_FREQ_HZ: u32 = 12_000_000u32;
 static ALARMS: Mutex<RefCell<Option<Alarm0<CopyableTimer0>>>> = Mutex::new(RefCell::new(None));
@@ -55,6 +56,33 @@ fn TIMER0_IRQ_0() {
         info!("Interrupt !");
         if let Some(alarm) = ALARMS.borrow_ref_mut(cs).as_mut() {
             alarm.clear_interrupt();
+
+            let mut alarms = rtos_core::alarms::SOFTW_ALARMS.borrow_ref_mut(cs);
+
+            for (i, alarm) in alarms.iter_mut().enumerate() {
+                if alarm.active {
+                    #[cfg(debug_assertions)]
+                    info!("Alarm {} is active", i);
+                    alarm.tick += alarm.alarm_base.ticksperbase;
+                    if alarm.tick > alarm.alarm_base.maxallowedvalue {
+                        unsafe {
+                            match i {
+                                1 => AlarmCallback1(),
+                                2 => AlarmCallback2(),
+                                3 => AlarmCallback3(),
+                                4 => AlarmCallback4(),
+                                5 => AlarmCallback5(),
+                                _ => (),
+                            }
+                        }
+                        alarm.tick = 0;
+                    }
+                }
+            }
+
+            //TODO : Change this hardcoded value
+            let _ = alarm.schedule(MicrosDurationU32::secs(1));
+            alarm.enable_interrupt();
         }
     })
 }

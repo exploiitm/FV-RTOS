@@ -11,8 +11,8 @@ pub type TickRefType = *mut TickType;
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct AlarmBaseType {
-    maxallowedvalue: TickType, // Maximum possible allowed count value in ticks
-    ticksperbase: TickType,    // Number of ticks required to reach counter specific unit
+    pub maxallowedvalue: TickType, // Maximum possible allowed count value in ticks
+    pub ticksperbase: TickType,    // Number of ticks required to reach counter specific unit
     _mincycle: TickType,       // TODO:
 }
 
@@ -34,12 +34,12 @@ pub type AlarmType = usize;
 //TODO:: Add cycle
 #[derive(Clone, Copy)]
 pub struct Alarm {
-    alarm_base: AlarmBaseType,
-    tick: TickType,
-    active: bool,
+    pub alarm_base: AlarmBaseType,
+    pub tick: TickType,
+    pub active: bool,
 }
 
-static SOFTW_ALARMS: Mutex<RefCell<[Alarm; NUM_ALARMS]>> = Mutex::new(RefCell::new(
+pub static SOFTW_ALARMS: Mutex<RefCell<[Alarm; NUM_ALARMS]>> = Mutex::new(RefCell::new(
     [Alarm {
         alarm_base: AlarmBaseType::zero(),
         tick: 0,
@@ -173,4 +173,13 @@ pub extern "C" fn CancelAlarm(alarm_id: AlarmType) -> StatusType {
         alarm_ref.tick = 0;
         StatusType::EOk
     })
+}
+
+unsafe extern "C" {
+    // hardcoding alarm callbacks until OIL parser is ready
+    pub fn AlarmCallback1();
+    pub fn AlarmCallback2();
+    pub fn AlarmCallback3();
+    pub fn AlarmCallback4();
+    pub fn AlarmCallback5();
 }

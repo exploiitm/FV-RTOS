@@ -9,7 +9,7 @@ use panic_probe as _;
 
 extern crate alloc;
 use alloc::string::String;
-mod alarms;
+pub mod alarms;
 
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -44,6 +44,7 @@ pub fn start_os() -> ! {
 
 unsafe extern "C" {
     fn Task1() -> c_void;
+
 }
 
 #[unsafe(no_mangle)]
