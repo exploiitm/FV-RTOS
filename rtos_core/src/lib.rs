@@ -36,6 +36,8 @@ pub fn start_os() -> ! {
     }
 
     ActivateTask();
+
+    #[cfg(debug_assertions)]
     info!("Control back to start_os");
     loop {}
 }
@@ -47,7 +49,6 @@ unsafe extern "C" {
 #[unsafe(no_mangle)]
 pub extern "C" fn ActivateTask() -> StatusType {
     // TODO: lookup & enqueue in your scheduler
-    info!("Task Activated ");
     unsafe {
         Task1();
     }
@@ -57,7 +58,6 @@ pub extern "C" fn ActivateTask() -> StatusType {
 #[unsafe(no_mangle)]
 pub extern "C" fn TerminateTask() {
     // TODO: context switch out
-    info!("Task Terminated ");
 }
 
 #[unsafe(no_mangle)]

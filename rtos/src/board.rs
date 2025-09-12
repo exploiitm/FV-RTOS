@@ -51,6 +51,7 @@ pub fn set_alarm(time: MicrosDurationU32) {
 #[interrupt]
 fn TIMER0_IRQ_0() {
     critical_section::with(|cs| {
+        #[cfg(debug_assertions)]
         info!("Interrupt !");
         if let Some(alarm) = ALARMS.borrow_ref_mut(cs).as_mut() {
             alarm.clear_interrupt();
