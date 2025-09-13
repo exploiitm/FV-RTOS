@@ -19,6 +19,6 @@ fn main() -> ! {
     info!("Program start");
 
     board::init();
-    board::set_alarm(MicrosDurationU32::secs(1));
+    board::set_alarm(MicrosDurationU32::secs(5));
     rtos_core::start_os();
 }

@@ -1,7 +1,7 @@
 use core::cell::RefCell;
 
 use critical_section::Mutex;
-use defmt::info;
+use defmt::{debug, info};
 use rp235x_hal::{
     self as hal,
     fugit::MicrosDurationU32,
@@ -62,20 +62,30 @@ fn TIMER0_IRQ_0() {
             for (i, alarm) in alarms.iter_mut().enumerate() {
                 if alarm.active {
                     #[cfg(debug_assertions)]
-                    info!("Alarm {} is active", i);
-                    alarm.tick += alarm.alarm_base.ticksperbase;
-                    if alarm.tick > alarm.alarm_base.maxallowedvalue {
+                    debug!(
+                        "Alarm {} is active, tick = {}, cycle = {}",
+                        i, alarm.tick, alarm.cycle
+                    );
+                    alarm.h_ticks += 1;
+                    if alarm.h_ticks >= alarm.alarm_base.ticksperbase {
+                        alarm.h_ticks = 0;
+                        alarm.tick += 1;
+                    }
+                    if alarm.tick >= alarm.alarm_base.maxallowedvalue {
+                        alarm.tick = alarm.cycle;
+                        if alarm.cycle == 0 {
+                            alarm.active = false;
+                        }
                         unsafe {
                             match i {
+                                0 => AlarmCallback0(),
                                 1 => AlarmCallback1(),
                                 2 => AlarmCallback2(),
                                 3 => AlarmCallback3(),
                                 4 => AlarmCallback4(),
-                                5 => AlarmCallback5(),
                                 _ => (),
                             }
                         }
-                        alarm.tick = 0;
                     }
                 }
             }
